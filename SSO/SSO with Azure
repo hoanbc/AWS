@@ -10,7 +10,8 @@ Step2) Config AWS SSO Change identity source phase1
 AWS Console -> AWS Single Sign-On -> Settings -> Identity source -> Action -> Change identity source -> External identity provider -> Next -> Service provider metadata -> Download metadata file (file1)
 
 Step3) Config Enterprise applications
-Azure Active Directory admin center -> Enterprise applications -> All applications -> New application -> Search: aws -> AWS Single Sign-on -> Manage -> Single sign-on -> Upload metadata file (file1) -> Add -> SAML Signing Certificate: Download: Federation Metadata XML (file2) and Certificate (Base64) (file3)
+Azure Active Directory admin center -> Enterprise applications -> All applications -> New application -> Search: aws -> AWS Single Sign-on -> Manage -> Single sign-on -> Upload metadata file (file1) -> Add -> SAML Signing Certificate: Download: Federation Metadata XML (file2) and Certificate (Base64) (file3) -> Save
+
 
 Step4) Config AWS SSO Change identity source phase2
 AWS Console -> AWS Single Sign-On -> Settings -> Identity source -> Action -> Change identity source -> External identity provider -> Next -> Identity provider metadata -> IdP SAML metadata (file2) -> IdP certificate(file3) -> Next -> Accept -> Change identity source
@@ -18,7 +19,10 @@ AWS Console -> AWS Single Sign-On -> Settings -> Identity source -> Action -> Ch
 Step5) Config AWS SSO Automatic provisioning
 AWS Console -> AWS Single Sign-On -> Settings -> Automatic provisioning: Enable -> Copy SCIM endpoint and Access token (info4) -> Close ->>
 
+Azure -> Azure Active Directory admin center -> Enterprise applications -> All applications -> AWS Single Sign-on -> Manage -> Users and groups -> Add user/group -> devops
+
+Step6) Assign user Azure for SSO AWS
 Azure -> Azure Active Directory admin center -> Enterprise applications -> All applications -> AWS Single Sign-on -> Manage -> Provisioning -> Edit provisioning -> Provisioning Mode: Automatic -> Admin Credentials: Tenant URL/Secret Token (info4) -> Save -> Start provisioning
 
-Step6) Assign users or groups to Organizational structure
+Step7) Assign users or groups to Organizational structure
 AWS Console -> AWS Single Sign-On -> AWS Account -> Root/HBC-Project1/HBC-Project1-Prod -> Assign users and groups -> User: devops -> Next -> Chosse Permission -> Next -> Submit
