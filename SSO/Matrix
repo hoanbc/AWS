@@ -1,0 +1,84 @@
+Group	Account	Description
+AWS Organization root	HBC-Corp-master
+	Account root - có quyền cao nhất. Chỉ được sử dụng để consolidate billing, và không deploy bất cứ resource nào lên account này. (ngoại trừ các CloudFormation stack dùng để khởi tạo dịch vụ trên các account member)
+Management Account	Log Archive
+	Log Archive account chứa Amazon S3 bucket nơi lưu trữ tập trung các bản sao của AWS CloudTrail và AWS Config log files
+	Shared Services	Nơi tạo và quản lý các dịch vụ sẽ được dùng chung bởi toàn bộ hệ thống. VD: Active Directory, Logging system, ...
+	Security Audit	Account dành cho team security. Nơi quản lý và theo dõi việc tuân thủ các tiêu chuẩn bảo mật của toàn hệ thống.
+Account này được thiết kế cho master Amazon GuardDuty account. Nơi quản trị viên có thể quản lý và config GuardDuty cho toàn bộ tài khoản thuộc organization.
+	Shared Network	Quản lý hạ tầng về network như “transit network” configuration. Quản lý VPC tập trung.
+HBC workload	HBC Dev	Account chứa các resource dành cho môi trường dev của dự án HBC
+	HBC UAT	Account chứa các resource dành cho môi trường UAT của dự án HBC
+	HBC Prod	Account chứa các resource dành cho môi trường production của dự án HBC
+
+
+Bảng ma trận phân quyền
+
+Group	AWS Account	Permission Set	Description
+Billing	HBC-Corp-master
+Log Archive
+Shared-Services
+Security Audit
+Shared-Network
+HBC-DEV
+HBC-UAT
+HBC-PROD	Cost And Usage Reports
+AWS Portal Billing
+AWS Cost Explorer	Có quyền trên những service về billing và cost management. Bao gồm việc theo dõi chi phí, lên ngân sách và update phương thức thanh toán.
+AdministratorAccess	HBC-Corp-master
+Log Archive
+Shared-Services
+Security Audit
+Shared-Network
+HBC-DEV
+HBC-UAT
+HBC-PROD	AdministratorFullAccess	Có toàn bộ quyền trên những account được chỉ định
+NetworkAdministrator	Shared-Services
+Shared-Network
+HBC-DEV
+HBC-UAT
+HBC-PROD	Ec2 Vpc
+Directconnect
+Route53
+Route53domains
+Cloudwatch
+Logs	Có quyền truy cập các thành phần phục vụ cho việc setup network trên những account thuộc hệ thống.
+PowerUserAccess	HBC-DEV
+HBC-UAT
+HBC-PROD	Full access but IAM	Có toàn quyền trên những account chứa workload (hoặc những account được chỉ định khác), nhưng không có quyền quản lý truy cập (như cấp quyền truy cập hay tạo role, permission)
+SecurityAdmin	HBC-Corp-master
+Log Archive
+Shared-Services
+Security Audit
+Shared-Network
+HBC-UAT
+HBC-PROD	Account Security Audit: full access
+Other account: Security Hub, GuardDuty, Access Analyzer, AWS Config, CloudTrail, WAF, Network Firewall	Có quyền read meta data trên những account thuộc organization.
+Có quyền admin trên Security Audit account.
+Có quyền admin trên các account khác đối với các dịch vụ về security
+SecurityAudit	HBC-Corp-master
+Log Archive
+Shared-Services
+Security Audit
+Shared-Network
+HBC-UAT
+HBC-PROD	Read on all services	Có quyền read meta data trên những account thuộc organization.
+SystemAdministrator	Shared-Services
+Shared-Network
+HBC-DEV
+HBC-UAT
+HBC-PROD	Cloudtrail
+Aws Certificate Manager
+Cloudwatch
+Aws Config
+Ec2
+Key Management Service
+Lambda
+Rds Monitoring
+System Manager	Có quyền thao tác trên những account và resource nhất định, phục vụ cho công tác vận hành hệ thống.
+DatabaseAdministrator	HBC-DEV
+HBC-UAT
+HBC-PROD	CloudWatchFullAccess
+AmazonRDSFullAccess
+AmazonElastiCacheFullAccess
+KMSListKeys	Có quyền quản trị các service về database trên những workload (account) được chỉ định.
