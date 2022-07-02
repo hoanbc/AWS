@@ -1,0 +1,21 @@
+### Create S3 Endpoint Gateway
+EC2 -> Endpoint GW -> S3
+
+Step1) Create Route Table
+AWS Console -> VPC -> Route tables -> Create route table -> Name: HBC-Private-ap-southeast-1a-Prod-RTB -> VPC: HBC-Private-ap-southeast-1a-Prod-VPC -> Create route table
+
+Step2) Associations subnet
+AWS Console -> VPC -> Route tables -> HBC-Private-ap-southeast-1a-Prod-RTB -> Subnet associations -> HBC-Private-ap-southeast-1a-Prod-Subnet -> Save
+
+Step3) Create S3 Endpoint
+AWS Console -> VPC -> Create endpoint -> Name tag: s3-endpoint -> Service category: AWS services -> Services: Gateway -> VPC: HBC-Private-ap-southeast-1a-Prod-VPC -> Route tables: HBC-Private-ap-southeast-1a-Prod-RTB -> Create endpoint
+
+Step4) Create IAM Role
+AWS Console -> IAM -> Roles -> IAM -> Create Role -> Trusted entity type: AWS Service -> 
+Common use cases: EC2 -> Permissions policies: AmazonS3ReadOnlyAccess -> Next -> Role name: S3-Endpoint -> Create Role
+
+Step5) Modify IAM Role EC2
+AWS Console -> EC2 -> Instant -> Action -> Security -> Monify IAM Role -> S3-Endpoint
+
+Step6) Access S3
+aws s3 ls --region ap-southeast-1

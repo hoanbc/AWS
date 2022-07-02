@@ -1,0 +1,7 @@
+### Create S3 and public with CloudFront
+
+1) Create S3 Bucket
+AWS Console -> S3 -> Create bucket-> Bucket name: Name bucket -> AWS Region: ap-southeast-1 -> Tick: Block all public access -> Bucket Versioning: Enable -> Create bucket
+
+2) Create CloudFront
+AWS Console -> CloudFront -> Create distribution -> Origin domain (Bucket step1) -> Name -> S3 bucket access: Yes use OAI (bucket can restrict access to only CloudFront) -> Create new OAI -> Create -> Bucket policy -> Yes, update the bucket policy -> Viewer protocol policy: Redirect HTTP to HTTPS -> Alternate domain name (CNAME) - optional: cloudfront.systemtest.cf -> Custom SSL certificate - optional: Create SSL -> Create distribution
